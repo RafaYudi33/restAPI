@@ -27,9 +27,8 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
             
             return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 
-
     } 
-    
+
     @ExceptionHandler(UnsuportedMathOperationException.class)
     public final ResponseEntity<ExceptionResponse> handleBadRequestException(
         UnsuportedMathOperationException e, WebRequest request
@@ -38,4 +37,4 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
         return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.BAD_REQUEST); 
     }
-}
+} 
