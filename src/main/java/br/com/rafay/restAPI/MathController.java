@@ -24,8 +24,8 @@ public class MathController {
             return convertToDouble(numberOne) + convertToDouble(numberTwo); 
     }
 
-    
-    @RequestMapping(value = "sub/{numberOne}/{numberTwo}", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/sub/{numberOne}/{numberTwo}", method = RequestMethod.GET)
     public Double sub (
             @PathVariable(value = "numberOne") String numberOne, 
             @PathVariable(value = "numberTwo") String numberTwo) throws Exception{
@@ -37,6 +37,31 @@ public class MathController {
             return convertToDouble(numberOne) - convertToDouble(numberTwo); 
     }
 
+    @RequestMapping(value = "/div/{numberOne}/{numberTwo}")
+    public Double div(
+            @PathVariable(value = "numberOne") String numberOne,
+            @PathVariable(value = "numberTwo") String numberTwo
+    ){
+
+            if(!isNumeric(numberOne)||!isNumeric(numberTwo)){
+                throw new UnsuportedMathOperationException("Insira apenas valores numéricos"); 
+            }
+
+            if(numberTwo == "0"){
+                throw new UnsuportedMathOperationException("Divisão por 0 não é permitida"); 
+            }
+
+            return convertToDouble(numberOne)/convertToDouble(numberTwo);
+    }
+
+    @RequestMapping(value = "/multiplication/{numberOne}/{numberTwo}")
+    public Double multiplication(
+            @PathVariable(value = "numberOne") String numberOne,
+            @PathVariable(value = "numberTwo") String numberTwo 
+    ){
+
+        return 0D; 
+    }
 
 
     private Double convertToDouble(String strNumber) {
