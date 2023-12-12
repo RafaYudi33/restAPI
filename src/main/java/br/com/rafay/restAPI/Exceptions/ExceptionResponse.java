@@ -1,12 +1,14 @@
 package br.com.rafay.restAPI.Exceptions;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Data 
+@Data
+@AllArgsConstructor
+
 public class ExceptionResponse implements Serializable {
     
     private static final long serialVersionUID = 1L; 

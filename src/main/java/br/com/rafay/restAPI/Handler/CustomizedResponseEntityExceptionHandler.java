@@ -14,7 +14,7 @@ import br.com.rafay.restAPI.Exceptions.ExceptionResponse;
 @ControllerAdvice
 @RestController
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
-    
+
     public final ResponseEntity<ExceptionResponse> handleAllExceptions(
         Exception e, WebRequest request){
         
@@ -22,7 +22,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
             new Date(), e.getMessage(), request.getDescription(false));
         
             return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+
+            
     }
-
-
 }
