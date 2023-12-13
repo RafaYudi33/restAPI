@@ -84,6 +84,22 @@ public class MathController {
             
     }
 
+       
+    @RequestMapping(value = "/media/{numberOne}/{numberTwo}")  
+    public Double media(
+            @PathVariable(value = "numberOne") String numberOne,
+            @PathVariable(value = "numberTwo") String numberTwo
+    ){
+
+            if(!isNumeric(numberOne)||!isNumeric(numberTwo)){
+                throw new UnsuportedMathOperationException("Insira apenas valores numéricos"); 
+            }
+
+
+            return (convertToDouble(numberOne)+convertToDouble(numberTwo))/2;
+            
+    }
+
      
     private Double convertToDouble(String strNumber) {
         if(strNumber == null) return 0D; 
