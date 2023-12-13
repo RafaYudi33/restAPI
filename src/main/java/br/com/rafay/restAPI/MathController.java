@@ -1,5 +1,6 @@
 package br.com.rafay.restAPI;
 
+import java.lang.Math;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,17 +43,14 @@ public class MathController {
             @PathVariable(value = "numberOne") String numberOne,
             @PathVariable(value = "numberTwo") String numberTwo
     ){
-
             if(!isNumeric(numberOne)||!isNumeric(numberTwo)){
                 throw new UnsuportedMathOperationException("Insira apenas valores numéricos"); 
             }
 
-            if(numberTwo == "0"){
-                throw new UnsuportedMathOperationException("Divisão por 0 não é permitida"); 
-            }
 
             return convertToDouble(numberOne)/convertToDouble(numberTwo);
     }
+
 
     @RequestMapping(value = "/multiplication/{numberOne}/{numberTwo}")
     public Double multiplication(
@@ -60,10 +58,33 @@ public class MathController {
             @PathVariable(value = "numberTwo") String numberTwo 
     ){
 
-        return 0D; 
+
+            if(!isNumeric(numberOne)||!isNumeric(numberTwo)){
+                throw new UnsuportedMathOperationException("Insira apenas valores numéricos"); 
+            }
+
+
+            return convertToDouble(numberOne)*convertToDouble(numberTwo);
     }
 
 
+
+    
+    @RequestMapping(value = "/raizQuadrada/{number}")  
+    public Double squareRoot(
+            @PathVariable(value = "number") String number
+    ){
+
+            if(!isNumeric(number)){
+                throw new UnsuportedMathOperationException("Insira apenas valores numéricos"); 
+            }
+
+
+            return Math.sqrt(convertToDouble(number));
+            
+    }
+
+     
     private Double convertToDouble(String strNumber) {
         if(strNumber == null) return 0D; 
 
