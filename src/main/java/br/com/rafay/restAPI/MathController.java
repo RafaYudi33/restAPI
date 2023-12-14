@@ -1,28 +1,39 @@
 package br.com.rafay.restAPI;
 
 import java.lang.Math;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.rafay.restAPI.Exceptions.UnsuportedMathOperationException;
+import br.com.rafay.restAPI.Utils.MathOperations;
+import br.com.rafay.restAPI.Utils.Utils;
 
 
 @RestController
 public class MathController {
+
+    @Autowired
+    MathOperations mathOperations; 
+
+    @Autowired
+    Utils utils;
+
 
     @RequestMapping(value = "/sum/{numberOne}/{numberTwo}", method = RequestMethod.GET)
     public Double sum (
             @PathVariable(value = "numberOne") String numberOne, 
             @PathVariable(value = "numberTwo") String numberTwo) throws Exception{
         
-            if(!isNumeric(numberOne)|| !isNumeric(numberTwo)){
+            if(!utils.isNumeric(numberOne)||(!utils.isNumeric(numberTwo))){
                throw new UnsuportedMathOperationException("Insira apenas valores numéricos");
             }
             
 
-            return convertToDouble(numberOne) + convertToDouble(numberTwo); 
+            return mathOperations.sum(utils.convertToDouble(numberOne), utils.convertToDouble(numberTwo)); 
     }
 
 
@@ -31,11 +42,13 @@ public class MathController {
             @PathVariable(value = "numberOne") String numberOne, 
             @PathVariable(value = "numberTwo") String numberTwo) throws Exception{
             
-            if(!isNumeric(numberOne)||!isNumeric(numberTwo)){
-                throw new UnsuportedMathOperationException("Insira apenas valores numéricos"); 
+            
+            if(!utils.isNumeric(numberOne)||(!utils.isNumeric(numberTwo))){
+               throw new UnsuportedMathOperationException("Insira apenas valores numéricos");
             }
+            
 
-            return convertToDouble(numberOne) - convertToDouble(numberTwo); 
+            return mathOperations.sub(utils.convertToDouble(numberOne), utils.convertToDouble(numberTwo)); 
     }
 
     @RequestMapping(value = "/div/{numberOne}/{numberTwo}")
@@ -43,12 +56,13 @@ public class MathController {
             @PathVariable(value = "numberOne") String numberOne,
             @PathVariable(value = "numberTwo") String numberTwo
     ){
-            if(!isNumeric(numberOne)||!isNumeric(numberTwo)){
-                throw new UnsuportedMathOperationException("Insira apenas valores numéricos"); 
+            
+            if(!utils.isNumeric(numberOne)||(!utils.isNumeric(numberTwo))){
+               throw new UnsuportedMathOperationException("Insira apenas valores numéricos");
             }
+            
 
-
-            return convertToDouble(numberOne)/convertToDouble(numberTwo);
+            return mathOperations.div(utils.convertToDouble(numberOne), utils.convertToDouble(numberTwo)); 
     }
 
 
@@ -59,28 +73,30 @@ public class MathController {
     ){
 
 
-            if(!isNumeric(numberOne)||!isNumeric(numberTwo)){
-                throw new UnsuportedMathOperationException("Insira apenas valores numéricos"); 
+            
+            if(!utils.isNumeric(numberOne)||(!utils.isNumeric(numberTwo))){
+               throw new UnsuportedMathOperationException("Insira apenas valores numéricos");
             }
+            
 
-
-            return convertToDouble(numberOne)*convertToDouble(numberTwo);
+            return mathOperations.mult(utils.convertToDouble(numberOne), utils.convertToDouble(numberTwo)); 
     }
 
 
 
     
-    @RequestMapping(value = "/raizQuadrada/{number}")  
+    @RequestMapping(value = "/sqrt/{number}")  
     public Double squareRoot(
             @PathVariable(value = "number") String number
     ){
 
-            if(!isNumeric(number)){
-                throw new UnsuportedMathOperationException("Insira apenas valores numéricos"); 
+            
+            if(!utils.isNumeric(number)){
+               throw new UnsuportedMathOperationException("Insira apenas valores numéricos");
             }
+            
 
-
-            return Math.sqrt(convertToDouble(number));
+            return mathOperations.squareRoot(utils.convertToDouble(number)); 
             
     }
 
@@ -91,32 +107,16 @@ public class MathController {
             @PathVariable(value = "numberTwo") String numberTwo
     ){
 
-            if(!isNumeric(numberOne)||!isNumeric(numberTwo)){
-                throw new UnsuportedMathOperationException("Insira apenas valores numéricos"); 
+            
+            if(!utils.isNumeric(numberOne)||(!utils.isNumeric(numberTwo))){
+               throw new UnsuportedMathOperationException("Insira apenas valores numéricos");
             }
+            
 
-
-            return (convertToDouble(numberOne)+convertToDouble(numberTwo))/2;
+            return mathOperations.media(utils.convertToDouble(numberOne), utils.convertToDouble(numberTwo)); 
             
     }
 
-     
-    private Double convertToDouble(String strNumber) {
-        if(strNumber == null) return 0D; 
-
-
-        String number = strNumber.replaceAll(",", "."); 
-        if(isNumeric(number)){
-            return Double.parseDouble(number); 
-        }
-
-        return 0D; 
-    }
-
-    private boolean isNumeric(String strNumber) {
-       if(strNumber == null) return false;  
-       String number = strNumber.replaceAll(",",".");  
-       return number.matches("[-+]?[0-9]*\\.?[0-9]+");
-    } 
+    
 
 }
