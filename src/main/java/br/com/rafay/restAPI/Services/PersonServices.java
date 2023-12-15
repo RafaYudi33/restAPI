@@ -52,9 +52,13 @@ public class PersonServices {
     }
 
     public Person update (Person person){
-        logger.info("Create one person"); 
+        logger.info("Update one person"); 
 
         return person; 
     }
 
+    public void delete (String id){
+        logger.info("delete one person"); 
+    }
+    
 }
