@@ -11,7 +11,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import br.com.rafay.restAPI.Exceptions.ExceptionResponse;
-import br.com.rafay.restAPI.Exceptions.UnsuportedMathOperationException;
+import br.com.rafay.restAPI.Exceptions.ResourceNotFoundException;
 
 @ControllerAdvice
 @RestController
@@ -29,12 +29,12 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
     } 
 
-    @ExceptionHandler(UnsuportedMathOperationException.class)
-    public final ResponseEntity<ExceptionResponse> handleBadRequestException(
-        UnsuportedMathOperationException e, WebRequest request
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public final ResponseEntity<ExceptionResponse> handleNotFoundException(
+        ResourceNotFoundException e, WebRequest request
     ){
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), e.getMessage(), request.getDescription(false)); 
-
-        return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.BAD_REQUEST); 
+        
+        return new ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.NOT_FOUND); 
     }
 } 

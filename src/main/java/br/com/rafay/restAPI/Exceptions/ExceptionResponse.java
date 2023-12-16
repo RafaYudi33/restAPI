@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 
+
 public class ExceptionResponse implements Serializable {
     
     private static final long serialVersionUID = 1L; 
