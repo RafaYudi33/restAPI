@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.rafay.restAPI.Exceptions.ResourceNotFoundException;
-import br.com.rafay.restAPI.Model.Person;
+import br.com.rafay.restAPI.Model.PersonDTO;
 import br.com.rafay.restAPI.Repositories.PersonRepository;
 
 
@@ -21,7 +21,7 @@ public class PersonServices {
     @Autowired
     private PersonRepository personRepository;
 
-    public List<Person> findAll(){
+    public List<PersonDTO> findAll(){
         logger.info("finding one person!");
         return personRepository.findAll();  
 
@@ -34,23 +34,23 @@ public class PersonServices {
     // }
 
 
-    public Person findById(Long id){ 
+    public PersonDTO findById(Long id){ 
         logger.info("Finding one person!");
         
         return personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
     }
 
 
-    public Person create (Person person){
+    public PersonDTO create (PersonDTO person){
         logger.info("Create one person"); 
 
         return personRepository.save(person); 
     }
 
-    public Person update (Person person){
+    public PersonDTO update (PersonDTO person){
         logger.info("Update one person!"); 
 
-        Person entity = personRepository.findById(person.getId()).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID")); 
+        PersonDTO entity = personRepository.findById(person.getId()).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID")); 
 
         entity.setFirstName(person.getFirstName());
         entity.setLastName(person.getLastName());
@@ -63,7 +63,7 @@ public class PersonServices {
     public void delete (Long id){
         logger.info("delete one person"); 
 
-        Person entity = personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
+        PersonDTO entity = personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
         personRepository.delete(entity);
     }
     
