@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.rafay.restAPI.Model.PersonDTO;
+import br.com.rafay.restAPI.DTOs.PersonDTO;
+import br.com.rafay.restAPI.Model.Person;
 import br.com.rafay.restAPI.Services.PersonServices;
 
 
