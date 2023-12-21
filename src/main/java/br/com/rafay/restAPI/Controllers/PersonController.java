@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.rafay.restAPI.DTOs.PersonDTO;
-import br.com.rafay.restAPI.Model.Person;
 import br.com.rafay.restAPI.Services.PersonServices;
 
 
@@ -28,7 +26,7 @@ public class PersonController {
     @Autowired
     private PersonServices personServices;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE  )    
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}  )    
     public List<PersonDTO> findByAll(){
 
         return personServices.findAll(); 
@@ -36,27 +34,27 @@ public class PersonController {
 
 
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE  )
+    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}  )
     public PersonDTO findById(@PathVariable("id") Long id) throws Exception{
 
         return personServices.findById(id); 
 
     }
     
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE )
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces ={MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} )
     public PersonDTO create(@RequestBody PersonDTO person){
 
         return personServices.create(person); 
 
     }
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE  )
+    @PutMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}  )
     public PersonDTO update(@RequestBody PersonDTO person){
         return personServices.update(person); 
 
     }
 
-    @DeleteMapping(value = "/{id}" ,consumes = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id){
         personServices.delete(id); 
         return ResponseEntity.noContent().build();
