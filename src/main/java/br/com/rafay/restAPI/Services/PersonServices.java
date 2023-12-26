@@ -3,8 +3,11 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.stereotype.Service;
 
+import br.com.rafay.restAPI.Controllers.PersonController;
 import br.com.rafay.restAPI.DTOs.PersonDTO;
 import br.com.rafay.restAPI.Exceptions.ResourceNotFoundException;
 import br.com.rafay.restAPI.Mapper.DozerMapper;
@@ -20,8 +23,9 @@ public class PersonServices {
     private PersonRepository personRepository;
 
     public List<PersonDTO> findAll(){
-        logger.info("finding one person!");
-       return DozerMapper.parseListObject(personRepository.findAll(), PersonDTO.class);   
+       logger.info("finding one person!");
+       var vo = DozerMapper.parseListObject(personRepository.findAll(), PersonDTO.class);   
+       return vo; 
     }
 
 
@@ -34,7 +38,14 @@ public class PersonServices {
     public PersonDTO findById(Long id){ 
         logger.info("Finding one person!");
         Person entity = personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
-        return DozerMapper.parseObject(entity, PersonDTO.class);
+        var vo = DozerMapper.parseObject(entity, PersonDTO.class);
+        try {
+            vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return vo; 
     }
 
 
@@ -49,7 +60,7 @@ public class PersonServices {
 
 
 
-        Person entity = personRepository.findById(person.getId()).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID")); 
+        Person entity = personRepository.findById(person.getKey()).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID")); 
 
 
 
