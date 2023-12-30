@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import org.springframework.hateoas.RepresentationModel;
 
+
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
 import lombok.AllArgsConstructor;
@@ -16,10 +18,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@JsonPropertyOrder({"key" ,"firstName", "lastName", "address" , "gender"})
 public class PersonDTO extends RepresentationModel<PersonDTO> implements Serializable{
 
     private static final long serialVersionUID = 1L; 
+
 
     @Mapping("id")
     private Long key; 
@@ -78,6 +81,7 @@ public class PersonDTO extends RepresentationModel<PersonDTO> implements Seriali
     public static long getSerialversionuid() {
         return serialVersionUID;
     }
+	
     
     
    

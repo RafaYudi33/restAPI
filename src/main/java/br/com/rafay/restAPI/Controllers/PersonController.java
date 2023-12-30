@@ -42,20 +42,20 @@ public class PersonController {
     }
     
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces ={MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} )
-    public PersonDTO create(@RequestBody PersonDTO person){
+    public PersonDTO create(@RequestBody PersonDTO person) throws Exception{
 
         return personServices.create(person); 
 
     }
 
     @PutMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}  )
-    public PersonDTO update(@RequestBody PersonDTO person){
+    public PersonDTO update(@RequestBody PersonDTO person) throws Exception{
         return personServices.update(person); 
 
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> delete(@PathVariable(value = "id") Long id){
+    public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) throws Exception{
         personServices.delete(id); 
         return ResponseEntity.noContent().build();
     }
